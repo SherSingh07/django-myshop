@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>DjPriceWatch</title>
+{% endblock %}
+
+{% block body %}
+
+<section>
+<p>There are {{ offers.count }} offers on <b>{{ product.name }}</b> </p>
+</section>
+
+<table border="1" cellspacing="5" cellpadding="5" width="100%">
+    <tr>
+        <td> <b>#</b> 
+        </td>
+        <td>
+            <b>Name</b>
+        </td>
+        <td>
+            <b>Coupon</b>
+        </td>
+        <td>
+            <b>Validity</b>
+        </td>
+    </tr>
+    <tr>
+        {% for offer in offers %}
+        <td>{{ forloop.counter }}</td>
+        <td>{{ offer.name }}</td>
+        <td>{{ offer.coupon }}</td>
+        <td>{{ offer.validity }}</td>
+        {% endfor %}
+    </tr>
+</table>
+<br> <br>
+
+{% endblock %}

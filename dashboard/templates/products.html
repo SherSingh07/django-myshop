@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>DjPriceWatch</title>
+<script>
+    var cnt = 0;
+    $(document).ready(function(){
+    });
+
+    /*
+    * function updates text of compare button
+    * with count of products to be compared
+    */
+    function addCompareItem(cb) {
+        if(cb.checked) { cnt++; }
+        else { cnt--; }
+        if(cnt<0) cnt=0;
+        if(cnt > 0) $("#btn_compare").html("Compare " + cnt + " items");
+        else $("#btn_compare").html("Compare");
+    }
+</script>
+{% endblock %}
+
+{% block body %}
+
+<h4>Comparing Products, Prices and Stores</h4>
+
+<table border="1" cellspacing="5" cellpadding="5" width="100%">
+    <!-- left column for categories -->
+    <td width="25%" class="info">
+        <form>
+            <br>
+            <b>Keywords</b><br>
+            <input type="text" name="keywords"><br>
+            <b>Price Range</b><br>
+            <input type="text" name="price_range"><br>
+            <b>Ratings</b><br>
+            <input type="text" name="ratings"><br>
+            <b>Brands</b><br>
+            {% for brand in brands %}
+            <input type="checkbox"> {{ brand }}<br>
+            {% endfor %}
+            <br>
+            <button class="btn btn-primary" type="submit">GO</button>
+        </form>
+    </td>
+
+    <!-- right column is a grid for sub categories -->
+    <td valign="top">
+        <form method="post" action="/compare/">{% csrf_token %}
+            <table class="table" border="0" cellspacing="5" cellpadding="5" width="100%">
+                <tr class="info">
+                    <td>
+                        <button class="btn btn-primary" type="submit" id="btn_compare">Compare</button>
+                    </td>
+                    <td>
+                        <b>Total:</b> {{ products.count }} models
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table table-striped" border="0" cellspacing="5" cellpadding="5" width="100%">
+                {% for product in products %}
+                <tr>
+                    <td><a href="/products/{{ product.id }}">{{ product.name }}</a></td>
+                    <td>Price: {{ product.price }} {{ product.currency }}</td>
+                    <td>Reviews: {{ product.get_review_count }}</td>
+                    <td>Rating: {{ product.get_rating }}</td>
+                    <td>Offers: 
+                        {% if product.get_offers_count > 0 %}
+                        <a href="/offers/{{ product.id }}">{{ product.get_offers_count }}</a>
+                        {% else %}
+                        {{ product.get_offers_count }}
+                        {% endif %}
+                    </td>
+                    <td><input type="checkbox" onChange="addCompareItem(this);" name="product_id" value="{{product.id}}"> Compare</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </form>
+    </td><!-- right column -->
+
+</table>
+
+
+<br> <br> <br> <br> <br> <br> <br>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>DjPriceWatch</title>
+{% endblock %}
+
+{% block body %}
+
+<h4>Comparing Products</h4>
+
+<table class="table table-striped" border="0" cellspacing="5" cellpadding="5" width="100%">
+    <tr>
+        <td>
+            <b>#</b> 
+        </td>
+        {% for product in products %}
+        <td><b>{{ product.name }}</b></td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td>
+            <b>Price</b>
+        </td>
+        {% for product in products %}
+        <td>{{ product.price }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td>
+            <b>Rating</b>
+        </td>
+        {% for product in products %}
+        <td>{{ product.get_rating }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td>
+            <b>Brand</b>
+        </td>
+        {% for product in products %}
+        <td>{{ product.brand }}</td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td>
+            <b>Website</b>
+        </td>
+        {% for product in products %}
+        <td><a href="{{ product.url }}">Read More...</a></td>
+        {% endfor %}
+    </tr>
+</table>
+<br> <br>
+
+{% endblock %}

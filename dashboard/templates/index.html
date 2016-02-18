@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>DjPriceWatch</title>
+{% endblock %}
+
+{% block body %}
+
+<section>
+<div style="color:#0000FF">
+    <h5>Compare Products, Prices and Stores</h5>
+</div>
+</section>
+
+<table class="table" border="1" cellspacing="5" cellpadding="5" width="100%">
+    <tr>
+        <!-- left column for properites -->
+        <td width="25%">
+            <table class="table" border="0" cellspacing="5" cellpadding="5" width="100%">
+                {% for category in categories %}
+                <tr>
+                    <td><a href="/category/{{category.id}}">{{ forloop.counter }}) {{ category.title }}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+
+        <!-- right column to show products -->
+        <td>
+
+            <table class="table" border="0" cellspacing="5" cellpadding="5" width="100%">
+                {% for sub_category in sub_categories %}
+                <tr>
+                    <td><a href="/products/{{ sub_category.id }}">{{ sub_category.title }}</a></td>
+                    <td>></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+    </tr>
+
+</table>
+
+
+<br> <br>
+
+{% endblock %}
